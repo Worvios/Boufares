@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum StatutUrgence {
+  URGENT
+  NORMAL
+}
+
+enum TypeRecette {
+  VIREMENT
+  CHEQUE
+  ESPECES
+}
+
+model Chantier {
+  id          Int       @id @default(autoincrement())
+  nom         String
+  responsable String
+  location    String // Ajouté pour la localisation du chantier
+  besoins     Besoin[]
+}
+
+model Fournisseur {
+  id              Int       @id @default(autoincrement())
+  nom_fournisseur String
+  type            String
+  besoins         Besoin[]
+}
+
+model Besoin {
+  id              Int       @id @default(autoincrement())
+  chantier        Chantier  @relation(fields: [chantierId], references: [id])
+  chantierId      Int
+  fournisseur     Fournisseur @relation(fields: [fournisseurId], references: [id])
+  fournisseurId   Int
+  prestation      String
+  montant_besoin  Float
+  date_besoin     DateTime
+  statut_urgence  StatutUrgence
+  commentaire     String?
+  paiements       Paiement[]
+}
+
+model Paiement {
+  id             Int      @id @default(autoincrement())
+  besoin         Besoin   @relation(fields: [besoinId], references: [id])
+  besoinId       Int
+  date_paiement  DateTime
+  montant_regle  Float
+  type_recette   TypeRecette
+  mois_concerne  String
+}

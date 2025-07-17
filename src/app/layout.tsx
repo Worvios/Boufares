@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -23,11 +20,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} antialiased bg-gray-50`}
       >
-        {children}
+        <div className="flex min-h-screen">
+          <aside className="w-64 bg-white border-r shadow-sm flex flex-col p-6 space-y-4">
+            <div className="text-2xl font-bold mb-8 text-blue-700">Gestion Chantier</div>
+            <nav className="flex flex-col gap-2">
+              <Link href="/dashboard" className="hover:bg-blue-50 rounded px-3 py-2 font-medium">Tableau de bord</Link>
+              <Link href="/chantiers" className="hover:bg-blue-50 rounded px-3 py-2 font-medium">Chantiers</Link>
+              <Link href="/fournisseurs" className="hover:bg-blue-50 rounded px-3 py-2 font-medium">Fournisseurs</Link>
+              <Link href="/besoins" className="hover:bg-blue-50 rounded px-3 py-2 font-medium">Besoins</Link>
+              <Link href="/paiements" className="hover:bg-blue-50 rounded px-3 py-2 font-medium">Paiements</Link>
+            </nav>
+            <div className="mt-auto text-xs text-gray-400">&copy; {new Date().getFullYear()} Boufares</div>
+          </aside>
+          <main className="flex-1 p-0 md:p-8">{children}</main>
+        </div>
       </body>
     </html>
   );
