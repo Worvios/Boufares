@@ -10,8 +10,6 @@ import { apiGet, apiPost, apiPut, apiDelete } from '@/lib/api';
 import { z } from 'zod';
 import { StatutUrgence } from '@/lib/types';
 import BesoinCreateForm from './BesoinCreateForm';
-import BesoinEditForm from './BesoinEditForm';
-import BesoinDeleteConfirmation from './BesoinDeleteConfirmation';
 
 interface Besoin {
   id: number;
@@ -342,7 +340,7 @@ const BesoinsPage: React.FC = () => {
                     title="Modifier le besoin"
                     description="Modifiez les informations du besoin sélectionné."
                   >
-                    <BesoinEditForm
+                    <BesoinCreateForm
                       form={form}
                       setForm={setForm}
                       formError={formError}
@@ -360,12 +358,10 @@ const BesoinsPage: React.FC = () => {
                     title="Supprimer le besoin"
                     description="Confirmez la suppression de ce besoin."
                   >
-                    <BesoinDeleteConfirmation
-                      deleteBesoin={deleteBesoin}
-                      closeDeleteModal={closeDeleteModal}
-                      saving={saving}
-                      handleDelete={handleDelete}
-                    />
+                    <div className="flex justify-end space-x-2 mt-6">
+                      <Button variant="outline" onClick={closeDeleteModal} disabled={saving}>Annuler</Button>
+                      <Button variant="destructive" onClick={handleDelete} disabled={saving}>{saving ? 'Suppression...' : 'Supprimer'}</Button>
+                    </div>
                   </Modal>
                 </td>
               </tr>
