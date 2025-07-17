@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { apiGet, apiPost, apiPut, apiDelete } from '@/lib/api';
 import { z } from 'zod';
 import { StatutUrgence } from '@/lib/types';
-import BesoinCreateForm from './BesoinCreateForm';
+import BesoinCreateForm from '@/components/BesoinCreateForm';
 
 interface Besoin {
   id: number;
@@ -239,15 +239,8 @@ const BesoinsPage: React.FC = () => {
           description="Remplissez le formulaire pour créer un besoin."
         >
           <BesoinCreateForm
-            form={form}
-            setForm={setForm}
-            formError={formError}
-            setFormError={setFormError}
-            saving={saving}
-            handleSubmit={handleSubmit}
-            closeModal={closeModal}
-            chantiers={chantiers}
-            fournisseurs={fournisseurs}
+            onSuccess={closeModal}
+            onCancel={closeModal}
           />
         </Modal>
       </div>
@@ -341,15 +334,8 @@ const BesoinsPage: React.FC = () => {
                     description="Modifiez les informations du besoin sélectionné."
                   >
                     <BesoinCreateForm
-                      form={form}
-                      setForm={setForm}
-                      formError={formError}
-                      setFormError={setFormError}
-                      saving={saving}
-                      handleSubmit={handleSubmit}
-                      closeModal={closeModal}
-                      chantiers={chantiers}
-                      fournisseurs={fournisseurs}
+                      onSuccess={closeModal}
+                      onCancel={closeModal}
                     />
                   </Modal>
                   <Modal
